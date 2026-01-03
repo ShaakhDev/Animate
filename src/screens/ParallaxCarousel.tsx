@@ -1,13 +1,7 @@
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   SharedValue,
+  useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   interpolate,
@@ -127,7 +121,7 @@ const Item = ({
     );
 
     const zIndex = Math.round(
-      interpolate(scrollX.value, inputRange, [0, 99, 0], Extrapolation.CLAMP),
+      interpolate(scrollX.value, inputRange, [0, 999, 0], Extrapolation.CLAMP),
     );
 
     const rotateY = interpolate(scrollX.value, inputRange, [
@@ -141,13 +135,13 @@ const Item = ({
       0,
     ]);
     return {
-      zIndex,
       transform: [
         { perspective: 500 },
         { rotateY: `${rotateY}rad` },
         { rotateX: `${rotateX}rad` },
         { rotateZ: `${rotateZ}deg` },
       ],
+      zIndex,
     };
   });
 
@@ -185,12 +179,17 @@ const Item = ({
 export const ParallaxCarouselScreen = () => {
   const scrollX = useSharedValue(0);
 
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: event => {
+      scrollX.value = event.contentOffset.x;
+    },
+  });
+
   return (
     <View style={styles.container}>
-      <FlatList
-        onScroll={event => {
-          scrollX.value = event.nativeEvent.contentOffset.x;
-        }}
+      <Animated.FlatList
+        scrollEventThrottle={16}
+        onScroll={scrollHandler}
         style={styles.flatList}
         contentContainerStyle={styles.contentContainer}
         data={carouselData}
@@ -218,7 +217,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flexGrow: 0,
-    position: 'relative',
   },
   contentContainer: {
     paddingVertical: 100,
@@ -230,6 +228,7 @@ const styles = StyleSheet.create({
     height: 350,
     borderRadius: 16,
     overflow: 'hidden',
+    position: 'relative',
   },
   image: {
     width: '100%',
