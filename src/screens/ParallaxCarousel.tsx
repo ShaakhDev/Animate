@@ -105,6 +105,7 @@ const Item = ({
       Extrapolation.CLAMP,
     );
   });
+
   const animatedStyle = useAnimatedStyle(() => {
     // Calculate the input range for this item
     const inputRange = [
@@ -113,6 +114,16 @@ const Item = ({
       (index + 1) * (ITEM_WIDTH + SPACING),
     ];
 
+    const rotateX = interpolate(scrollX.value, inputRange, [
+      0,
+      rotationX.value,
+      0,
+    ]);
+    const rotateY = interpolate(scrollX.value, inputRange, [
+      0,
+      rotationY.value,
+      0,
+    ]);
     const rotateZ = interpolate(
       scrollX.value,
       inputRange,
@@ -120,20 +131,10 @@ const Item = ({
       Extrapolation.CLAMP,
     );
 
-    const zIndex = Math.round(
-      interpolate(scrollX.value, inputRange, [0, 999, 0], Extrapolation.CLAMP),
+    const zIndex = Math.ceil(
+      interpolate(scrollX.value, inputRange, [0, 1, 0], Extrapolation.CLAMP),
     );
 
-    const rotateY = interpolate(scrollX.value, inputRange, [
-      0,
-      rotationY.value,
-      0,
-    ]);
-    const rotateX = interpolate(scrollX.value, inputRange, [
-      0,
-      rotationX.value,
-      0,
-    ]);
     return {
       transform: [
         { perspective: 500 },
@@ -142,6 +143,7 @@ const Item = ({
         { rotateZ: `${rotateZ}deg` },
       ],
       zIndex,
+      elevation: zIndex, // For Android
     };
   });
 
@@ -163,15 +165,17 @@ const Item = ({
 
   return (
     <Animated.View style={[styles.item, animatedStyle]}>
-      <Image source={item.image} style={styles.image} />
-      <Animated.View style={[styles.blur, animatedBlurStyle]}>
-        <Text style={styles.blurText}>{item.title}</Text>
-        <View style={styles.dotsContainer}>
-          <View style={styles.dot} />
-          <View style={styles.dot} />
-          <View style={styles.dot} />
-        </View>
-      </Animated.View>
+      <View style={styles.itemContent}>
+        <Image source={item.image} style={styles.image} />
+        <Animated.View style={[styles.blur, animatedBlurStyle]}>
+          <Text style={styles.blurText}>{item.title}</Text>
+          <View style={styles.dotsContainer}>
+            <View style={styles.dot} />
+            <View style={styles.dot} />
+            <View style={styles.dot} />
+          </View>
+        </Animated.View>
+      </View>
     </Animated.View>
   );
 };
@@ -213,7 +217,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#042a2b',
-    position: 'relative',
   },
   flatList: {
     flexGrow: 0,
@@ -226,9 +229,12 @@ const styles = StyleSheet.create({
   item: {
     width: ITEM_WIDTH,
     height: 350,
+  },
+  itemContent: {
+    width: '100%',
+    height: '100%',
     borderRadius: 16,
     overflow: 'hidden',
-    position: 'relative',
   },
   image: {
     width: '100%',
