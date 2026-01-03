@@ -1,0 +1,86 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    minHeight: 40,
+    borderRadius: 14,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingTop: 10,
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    overflow: 'hidden',
+  },
+  dayHeader: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 10,
+  },
+  openContainer: {
+    backgroundColor: 'white',
+  },
+  dayText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  timeContainer: {
+    width: '100%',
+    borderRadius: 12,
+    justifyContent: 'flex-start',
+    gap: 10,
+  },
+  timeText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  addTimeButton: {
+    width: '100%',
+    paddingVertical: 8,
+    borderRadius: 10,
+    marginBottom: 10,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    marginTop: 'auto',
+    justifyContent: 'center',
+  },
+  addTimeButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  timeRow: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  removeTimeButton: {
+    padding: 6,
+    borderRadius: 8,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  timeLabelText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: 'gray',
+  },
+  timeValueText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: 'black',
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    borderRadius: 6,
+    borderColor: 'lightgray',
+  },
+});
