@@ -18,6 +18,12 @@ export const HomeScreen = ({
         </Pressable>
         <Pressable
           style={styles.button}
+          onPress={() => navigation.navigate('Ticker')}
+        >
+          <Text style={styles.buttonText}>Ticker</Text>
+        </Pressable>
+        <Pressable
+          style={styles.button}
           onPress={() => navigation.navigate('RadialProgress')}
         >
           <Text style={styles.buttonText}>Radial Progress</Text>

@@ -5,12 +5,14 @@ import {
   ScheduleScreen,
   ParallaxCarouselScreen,
   AnimatedLogoScreen,
+  TickerScreen,
 } from '@/screens';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type MainStackParamList = {
   Home: undefined;
   ProgressBar: undefined;
+  Ticker: undefined;
   RadialProgress: undefined;
   Schedule: undefined;
   ParallaxCarousel: undefined;
@@ -28,6 +30,7 @@ export const MainNavigator = () => {
         component={HomeScreen}
       />
       <Stack.Screen name="ProgressBar" component={ProgressBarScreen} />
+      <Stack.Screen name="Ticker" component={TickerScreen} />
       <Stack.Screen name="RadialProgress" component={RadialProgressScreen} />
       <Stack.Screen name="Schedule" component={ScheduleScreen} />
       <Stack.Screen

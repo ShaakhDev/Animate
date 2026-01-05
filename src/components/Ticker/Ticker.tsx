@@ -8,6 +8,7 @@ import Animated, {
 interface TickerProps {
   value?: number;
   fontSize?: number;
+  percentage?: boolean;
 }
 
 type TickerListProps = {
@@ -85,7 +86,11 @@ function TickerList({
   );
 }
 
-function Ticker({ value = 1234, fontSize = 50 }: TickerProps) {
+function Ticker({
+  value = 1234,
+  fontSize = 50,
+  percentage = true,
+}: TickerProps) {
   const splitValue = value.toString().split('');
   return (
     <View>
@@ -97,7 +102,16 @@ function Ticker({ value = 1234, fontSize = 50 }: TickerProps) {
             key={index}
           />
         ))}
-        <Text style={styles.tickerText}>%</Text>
+        {percentage && (
+          <Text
+            style={[
+              styles.tickerText,
+              { fontSize: fontSize, lineHeight: fontSize * 1.1 },
+            ]}
+          >
+            %
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -120,7 +134,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '700',
     fontSize: 10,
-    lineHeight: 10 * 1.1,
+    // lineHeight: 10 * 1.1,
   },
 });
 
